@@ -8,65 +8,7 @@
  * @package yanapu
  */
 
-add_shortcode('date', function() {
-	return date('Y年 n月 j日 H:i:s');
-});
-
-add_shortcode('sum', function($atts) {
-	//引数を与えなかった時のためのデフォルト値
-	$atts = shortcode_atts([
-		'x' => 0,
-		'y' => 0
-	], $atts, 'sum');
-
-	return $atts['x'] + $atts['y'];
-});
-
- // 「投稿」というメニューの名前を「技術メモ」に変更
- function Change_menulabel() {
-	global $menu;
-	global $submenu;
-	$name = '技術メモ';
-	$menu[5][0] = $name;
-	$submenu['edit.php'][5][0] = $name.'一覧';
-}
-add_action( 'admin_menu', 'Change_menulabel' );
-
-function Change_objectlabel() {
-	global $wp_post_types;
-	$name = '技術メモ';
-	$labels = &$wp_post_types['post']->labels;
-	$labels->name = $name;
-	$labels->singular_name = $name;
-	$labels->search_items = $name.'を検索';
-	$labels->not_found = $name.'が見つかりませんでした';
-	$labels->not_found_in_trash = 'ゴミ箱に'.$name.'は見つかりませんでした';
-}
-add_action( 'admin_menu', 'Change_objectlabel' );
-
-
- // カスタム投稿ページ（日記）の追加
-add_action('init', function () {
-	register_post_type('diary', [
-		'label' => '日記',
-		'public' => true,
-		'menu_position' => 5, //サイドバーにおける位置
-		'menu_icon' => 'dashicons-book-alt', //icon画像
-		'supports' => ['thumbnail', 'title', 'editor', 'custom-fields'], //アイキャッチ画像の追加設定
-		'has_archive' => true, //カスタム投稿ページで一覧リストの表示設定
-		'show_in_rest' => true,
-	]);
-	register_taxonomy('category_diary', 'diary', [
-		'label' => 'カテゴリー',
-		'hierarchical' => true, //階層構造にするときはtrue（カテゴリー）
-		'show_in_rest' => true,
-	]);
-	register_taxonomy('tag_diary', 'diary', [
-		'label' => 'タグ',
-		'hierarchical' => false, //並列にするにはfalse(タグ)
-		'show_in_rest' => true,
-	]);
-});
+// 自作関数は、自作プラグインに記述。（my-plugin.php）
 
 if (!defined('_S_VERSION')) {
 	// Replace the version number of the theme on each release.
